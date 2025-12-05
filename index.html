@@ -9,72 +9,131 @@
     body {
         margin: 0;
         padding: 0;
+        overflow: hidden;
         font-family: "Poppins", sans-serif;
+        color: white;
         text-align: center;
-        color: #fff;
-        background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
-            url('https://upload.wikimedia.org/wikipedia/commons/9/9b/IISER_Pune_Main_Building.jpg');
+    }
+
+    /* --- BACKGROUND SLIDESHOW --- */
+    .bg {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        z-index: -1;
         background-size: cover;
         background-position: center;
+        animation: slide 18s infinite;
+    }
+
+    @keyframes slide {
+        0%   { background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/9b/IISER_Pune_Main_Building.jpg'); }
+        33%  { background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/56/IISER_Pune_Campus_Scenery.jpg'); }
+        66%  { background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0a/IISER_Pune_Main_Block.jpg'); }
+        100% { background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/9b/IISER_Pune_Main_Building.jpg'); }
+    }
+
+    /* --- FLOATING PARTICLES --- */
+    .particles span {
+        position: absolute;
+        width: 5px; height: 5px;
+        background: rgba(255,255,255,0.7);
+        border-radius: 50%;
+        animation: float 6s linear infinite;
+    }
+
+    @keyframes float {
+        from { transform: translateY(100vh); opacity: 0; }
+        to   { transform: translateY(-10vh); opacity: 1; }
     }
 
     .container {
-        padding: 20px;
-        margin-top: 10vh;
-        animation: fade 1.5s ease-in-out;
+        margin-top: 12vh;
+        animation: fadeIn 2s ease-in-out;
     }
 
-    @keyframes fade {
-        from {opacity: 0; transform: translateY(20px);}
-        to   {opacity: 1; transform: translateY(0);}
-    }
-
-    .cake {
-        font-size: 45px;
-        margin: 20px 0;
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
     }
 
     .candles {
-        font-size: 30px;
-        color: gold;
-        animation: flicker 0.9s infinite alternate;
+        font-size: 35px;
         margin-bottom: -10px;
+        cursor: pointer;
+        animation: flicker 1s infinite alternate;
     }
 
     @keyframes flicker {
-        0% {opacity: 1;}
-        50% {opacity: 0.4;}
-        100% {opacity: 1;}
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+
+    .cake {
+        font-size: 55px;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .cake:active {
+        transform: scale(1.15) rotate(5deg);
     }
 
     .msg {
-        font-size: 18px;
-        line-height: 1.5;
         margin-top: 15px;
+        font-size: 20px;
+        display: none;
+        animation: msgFade 2s forwards;
     }
 
-    .name {
-        font-weight: 700;
-        font-size: 24px;
-        margin-bottom: 10px;
+    @keyframes msgFade {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
     }
 </style>
 </head>
 
 <body>
+
+<div class="bg"></div>
+
+<div class="particles">
+    <!-- 40 floating particles -->
+    <script>
+    for(let i=0;i<40;i++){
+        document.write("<span style='left:"+Math.random()*100+"vw; animation-duration:"+(4+Math.random()*4)+"s;'></span>");
+    }
+    </script>
+</div>
+
 <div class="container">
+    <h1>Happy Birthday, Sreya 🎉</h1>
 
-    <div class="name">Happy Birthday, Sreya 🎉</div>
-
-    <div class="candles">🕯️ 🕯️ 🕯️</div>
-
-    <div class="cake">🎂</div>
-
-    <div class="msg">
-        Wishing you a day as bright and sweet as this little cake.<br>
-        Sending smiles, warmth, and a tiny piece of IISER Pune sunshine your way ✨💛
+    <div class="candles" onclick="blow()">
+        🕯️ 🕯️ 🕯️
     </div>
 
+    <div class="cake" onclick="showMsg()">
+        🎂
+    </div>
+
+    <div id="message" class="msg">
+        You deserve all the brightness the world holds ✨<br>
+        And a little extra piece of IISER Pune sunshine today 💛
+    </div>
 </div>
+
+<script>
+    function blow() {
+        document.querySelector('.candles').innerHTML = "✨ ✨ ✨";
+    }
+
+    function showMsg() {
+        document.getElementById("message").style.display = "block";
+    }
+</script>
+
 </body>
 </html>
+
